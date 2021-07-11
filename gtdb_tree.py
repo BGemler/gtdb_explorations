@@ -26,6 +26,30 @@ def extract_rank_name(feature):
 	return feature_name, feature_rank
 
 
+def get_lineage(line):
+	""" GTDB has repeat taxonomy names for some ranks. Need to dedup
+	For duplicate names at diff ranks in the same path, assign name
+	to the highest taxonomy rank
+	"""
+	lineage = line.split("\t")[1].split(";")
+
+	# need to de-couple repeat taxonomy names
+	lineage_out = []
+	lineage_taxonomy_names_only = []
+	for l in lineage:
+		_, name = l.split("__")
+		name = name.lower()
+		if name not in lineage_taxonomy_names_only:
+			lineage_out.append(l)
+			lineage_taxonomy_names_only.append(name)
+
+	if "palsa-1178" in lineage:
+		print(lineage)
+		print(lineage_out)
+
+	return lineage_out
+
+
 class TaxonomyTree():
 
 	def __init__(self, taxdump_dir, force_reload=False):
@@ -49,7 +73,7 @@ class TaxonomyTree():
 				self.nodes = {}
 				unseen = {}
 				for l in f:
-					lineage = l.split("\t")[1].split(";")
+					lineage = get_lineage(l)
 
 					for i in range(len(lineage) - 1):
 						parent, child = lineage[i], lineage[i + 1]
@@ -74,7 +98,7 @@ class TaxonomyTree():
 			# add archaea nodes
 			with open(arc_nodes_fn) as f:
 				for l in f:
-					lineage = l.split("\t")[1].split(";")
+					lineage = get_lineage(l)
 
 					for i in range(len(lineage) - 1):
 						parent, child = lineage[i], lineage[i + 1]
@@ -131,6 +155,7 @@ class TaxonomyTree():
 		"""walk down the tree and return set of all child nodes"""
 		all_children = {taxid}
 		node = self[taxid]
+
 		for child in node.children:
 			all_children.update(self.descend(child))
 		return all_children
