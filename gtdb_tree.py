@@ -43,10 +43,6 @@ def get_lineage(line):
 			lineage_out.append(l)
 			lineage_taxonomy_names_only.append(name)
 
-	if "palsa-1178" in lineage:
-		print(lineage)
-		print(lineage_out)
-
 	return lineage_out
 
 

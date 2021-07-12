@@ -3,7 +3,7 @@
 def load_rep_genome_cluster(gtdb_cluster_loc):
 	"""
 	returns dictionary of 
-	[taxonomy] : [representative genome, [all genomes]]
+	taxonomy : [representative genome, [all genomes]]
 
 	requires sp_clusters.tsv from 
 	https://data.gtdb.ecogenomic.org/releases/latest/auxillary_files/

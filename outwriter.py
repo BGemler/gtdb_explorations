@@ -41,7 +41,6 @@ def write_out_taxid_splice(tree, \
 				rep_species_genomes.append(rep_genome) 
 
 				species_count_list.append([s, len(tot_genomes)])
-			rep_species_genomes = rep_species_genomes[:-1]
 
 			species_count_list = sorted(species_count_list, key = lambda x:x[1], reverse = True)
 			down_species_count_list = species_count_list[:5] if len(species_count_list) > 5 else species_count_list
