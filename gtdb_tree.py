@@ -80,11 +80,12 @@ class TaxonomyTree():
 						parent_name, parent_rank = extract_rank_name(parent)
 						child_name, child_rank = extract_rank_name(child)
 
-						self.nodes[child_name] = Node(
-								taxid=child_name,
-								rank=child_rank,
-								parent=parent_name,
-								children=set())
+						if child_name not in self.nodes:
+							self.nodes[child_name] = Node(
+									taxid=child_name,
+									rank=child_rank,
+									parent=parent_name,
+									children=set())
 
 						if parent_name not in self.nodes:
 							# some parent nodes are referenced before they come up as children
@@ -106,11 +107,12 @@ class TaxonomyTree():
 						parent_name, parent_rank = extract_rank_name(parent)
 						child_name, child_rank = extract_rank_name(child)
 
-						self.nodes[child_name] = Node(
-								taxid=child_name,
-								rank=child_rank,
-								parent=parent_name,
-								children=set())
+						if child_name not in self.nodes:
+							self.nodes[child_name] = Node(
+									taxid=child_name,
+									rank=child_rank,
+									parent=parent_name,
+									children=set())
 
 						if parent_name not in self.nodes:
 							# some parent nodes are referenced before they come up as children
